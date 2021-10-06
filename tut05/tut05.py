@@ -2,12 +2,15 @@ from openpyxl import Workbook
 import os
 import csv
 from openpyxl import load_workbook
+from openpyxl.styles import Font
+from openpyxl.styles import PatternFill
+
 def convert(s) :
-    if(s == 'AA') :
+    if(s == 'AA' ) :
         return 10
-    elif s == "AB" :
+    elif s == "AB"  :
         return 9
-    elif s == 'BB' :
+    elif s == 'BB' or s ==' BB' :
         return 8
     elif s == 'BC' :
         return 7
@@ -15,11 +18,11 @@ def convert(s) :
         return 6
     elif s == 'CD' :
         return 5
-    elif s == 'DD' :
+    elif s == 'DD' or s =='DD*' :
         return 4
-    elif s == 'I' :
+    elif s == 'I' or s =='I*' :
         return 0
-    elif s =="F" :
+    elif s =="F" or s == 'F*' :
         return 0
 
 def generate_marksheet():
@@ -109,45 +112,78 @@ def generate_marksheet():
                  maxrow6  = sheet6.max_row
                  maxrow7  = sheet7.max_row
                  maxrow8  = sheet8.max_row
-                 for i in range(maxrow1-1) :
-                    credits1 =  credits1 +  sheet1.cell(row=i + 2, column=5).value
-                    spi1  = spi1 + (sheet1.cell(row=i + 2, column=5).value)*convert((sheet1.cell(row=i + 2, column=7).value)) 
-                         
-                 for i in range(maxrow2-1) :
-                       credits2 =  credits2 +  sheet2.cell(row=i + 2, column=5).value
-                       spi2  = spi2 + (sheet2.cell(row=i + 2, column=5).value)*convert((sheet2.cell(row=i + 2, column=7).value))
-                 for i in range(maxrow3-1) :
-                       credits3 =  credits3 +  sheet3.cell(row=i + 2, column=5).value
-                       spi3  = spi3 + (sheet3.cell(row=i + 2, column=5).value)*convert((sheet3.cell(row=i + 2, column=7).value))
-                 for i in range(maxrow4-1) :
+                 try :
+                     for i in range(maxrow1-1) :
+                         credits1 =  credits1 +  sheet1.cell(row=i + 2, column=5).value
+                         spi1  = spi1 + (sheet1.cell(row=i + 2, column=5).value)*convert((sheet1.cell(row=i + 2, column=7).value)) 
+                 except TypeError :
+                     del sheet1
+                 try :
+                     for i in range(maxrow2-1) :
+                         credits2 =  credits2 +  sheet2.cell(row=i + 2, column=5).value
+                         spi2  = spi2 + (sheet2.cell(row=i + 2, column=5).value)*convert((sheet2.cell(row=i + 2, column=7).value))
+                 except TypeError :
+                     del sheet2
+                 try :
+                      for i in range(maxrow3-1) :
+                          credits3 =  credits3 +  sheet3.cell(row=i + 2, column=5).value
+                          spi3  = spi3 + (sheet3.cell(row=i + 2, column=5).value)*convert((sheet3.cell(row=i + 2, column=7).value))
+                 except TypeError:
+                     del sheet3
+                 try :
+                      for i in range(maxrow4-1) :
                          credits4 =  credits4 +  sheet4.cell(row=i + 2, column=5).value
                          spi4  = spi4 + (sheet4.cell(row=i + 2, column=5).value)*convert((sheet4.cell(row=i + 2, column=7).value))
-                 for i in range(maxrow5-1) :
-                        credits5 =  credits5 +  sheet5.cell(row=i + 2, column=5).value
-                        spi5  = spi5 + (sheet5.cell(row=i + 2, column=5).value)*convert((sheet5.cell(row=i + 2, column=7).value))
-                 for i in range(maxrow6-1) :
-                   credits6 =  credits6 +  sheet6.cell(row=i + 2, column=5).value
-                   spi6  = spi6 + (sheet6.cell(row=i + 2, column=5).value)*convert((sheet6.cell(row=i + 2, column=7).value))
-                 for i in range(maxrow7-1) :
-                      credits7 =  credits7 +  sheet7.cell(row=i + 2, column=5).value
-                      spi7  = spi7 + (sheet7.cell(row=i + 2, column=5).value)*convert((sheet7.cell(row=i + 2, column=7).value))
-                 for i in range(maxrow8-1) :
+                 except TypeError :
+                     del sheet4
+                 try :
+                     for i in range(maxrow5-1) :
+                         credits5 =  credits5 +  sheet5.cell(row=i + 2, column=5).value
+                         spi5  = spi5 + (sheet5.cell(row=i + 2, column=5).value)*convert((sheet5.cell(row=i + 2, column=7).value))
+                 except TypeError :
+                     del sheet5
+                 try :
+                     for i in range(maxrow6-1) :
+                         credits6 =  credits6 +  sheet6.cell(row=i + 2, column=5).value
+                         spi6  = spi6 + (sheet6.cell(row=i + 2, column=5).value)*convert((sheet6.cell(row=i + 2, column=7).value))
+                 except TypeError :
+                     del sheet6
+                 try :
+                     for i in range(maxrow7-1) :
+                          credits7 =  credits7 +  sheet7.cell(row=i + 2, column=5).value
+                          spi7  = spi7 + (sheet7.cell(row=i + 2, column=5).value)*convert((sheet7.cell(row=i + 2, column=7).value))
+                 except TypeError :
+                     del sheet7
+                 try :
+                     for i in range(maxrow8-1) :
                          credits8 =  credits8 +  sheet8.cell(row=i + 2, column=5).value
                          spi8  = spi8 + (sheet8.cell(row=i + 2, column=5).value)*convert((sheet8.cell(row=i + 2, column=7).value))
-                
+                 except TypeError :
+                     del sheet8
+                 
                  overall['B5'] , overall['C5'] , overall['D5'] , overall['E5']  = credits1 , credits2 , credits3 , credits4  
                  overall['F5'] , overall['G5'] , overall['H5'] , overall['I5']  = credits5 , credits6 , credits7 , credits8  
-                 overall['B6'] , overall['C6'] , overall['D6'] , overall['E6']= round(spi1/credits1 ,2)  , round(spi2/credits2, 2) ,round(spi3/credits3,2) , round(spi4/credits4,2)  
-                 overall['F6'] , overall['G6'] , overall['H6'] , overall['I6']  = round(spi5/credits5,2) , round(spi6/credits6,2) , round(spi7/credits7,2) , round(spi8/credits8,2)  
-        
-                 for i in range(8)     :
-                  total = total + overall.cell(row = 5 , column =i + 2).value
-                  sum = sum + (overall.cell(row = 6 , column = i+2).value)*(overall.cell(row = 5 , column = i+2).value)
-                  overall.cell(row = 8 ,column = i+2).value = round(sum/total , 2)
-                  overall.cell(row=7 , column = i + 2).value = total
+                 try :
+                     overall['B6'] , overall['C6'] , overall['D6'] , overall['E6']= round(spi1/credits1 ,2)  , round(spi2/credits2, 2) ,round(spi3/credits3,2) , round(spi4/credits4,2)  
+                     overall['F6'] , overall['G6'] , overall['H6'] , overall['I6']  = round(spi5/credits5,2) , round(spi6/credits6,2) , round(spi7/credits7,2) , round(spi8/credits8,2)  
+                 except ZeroDivisionError :
+                      pass
+                 try :
+                    for i in range(8)     :
+                       total = total + overall.cell(row = 5 , column =i + 2).value
+                       sum = sum + (overall.cell(row = 6 , column = i+2).value)*(overall.cell(row = 5 , column = i+2).value)
+                       overall.cell(row = 8 ,column = i+2).value = round(sum/total , 2)
+                       overall.cell(row=7 , column = i + 2).value = total
+                 except TypeError :
+                     pass 
+                
                  overall.column_dimensions['A'].width = 25
+                 for row in sheet2.iter_rows(min_row=1, max_row=1):
+                     for cell in row:
+                         cell.font = Font(bold=True)
+                         cell.fill = PatternFill(fgColor="77C3FD", fill_type = "solid")
+                
                  sheet1.column_dimensions['C'].width = 25
-        
                  wb.save(sheetName)
         
                  
