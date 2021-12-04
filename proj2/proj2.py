@@ -1,4 +1,2 @@
-def generate_transcript():
-    return
-
-
+import os
+os.system('app.py')
